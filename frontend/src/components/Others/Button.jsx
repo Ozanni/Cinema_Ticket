@@ -27,7 +27,7 @@ const StyledButton = styled.button`
       ? "#72be43"
       : "linear-gradient(to bottom, #72be43, #dde455)"};
   color: white;
-  padding: 5px 15px;
+  padding: 5px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

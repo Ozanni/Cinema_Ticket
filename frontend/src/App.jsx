@@ -1,23 +1,15 @@
 import "./App.css";
 import { AreaSelect } from "./components/AreaSelect";
 import { Layout } from "./components/Auth/Layout";
-import { ButtonByTickets } from "./components/ButtonByTickets";
 import { Header } from "./components/Header/Header";
 import { MenuHeader } from "./components/Header/MenuHeader";
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import { Home } from "./components/Home/Home";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Header
-              left={<MenuHeader />}
-              right={<AreaSelect area={"Hà Nội"} isIcon />}
-            />
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/tai-khoan" element={<Layout />} />
         <Route
           path="/he-thong-rap"
