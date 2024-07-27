@@ -40,7 +40,7 @@ const StyledHeader = styled.header`
   background-color: ${(props) =>
     props.$scrolled === "true" ? "black" : "#1a1d29"};
   width: 100%;
-  // padding: 10px;
+  border-bottom: 1px solid #454d6a;
 `;
 
 const StyledNav = styled.nav`

@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { Button } from "../Others/Button";
 import useModal from "../../hooks/useModal";
 import MovieModal from "./MovieModal";
+import { useNavigate } from "react-router-dom";
 
 export const Movie = ({ movie }) => {
-  const { isOpen, open, close } = useModal();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -25,12 +26,16 @@ export const Movie = ({ movie }) => {
           <StyledMovieName>{movie.movie_name}</StyledMovieName>
           <StyledCategory>Thể loại phim: {movie.category}</StyledCategory>
         </StyledContent>
-        <div>
-          <Button text={"Mua vé ngay"} isTicket />
-        </div>
 
         <MovieModal id={movie.movie_id} movie={movie} />
       </StyledContainer>
+      <div>
+        <Button
+          text={"Mua vé ngay"}
+          isTicket
+          onClick={() => navigate(`/ticket/${movie.movie_id}/step1`)}
+        />
+      </div>
     </>
   );
 };

@@ -5,40 +5,46 @@ import { Header } from "./components/Header/Header";
 import { MenuHeader } from "./components/Header/MenuHeader";
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import { Home } from "./components/Home/Home";
+import { Ticket } from "./routes/Ticket";
+import { AppRoutes } from "./routes";
 function App() {
   return (
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/" element={<Home />} />
+    //     <Route path="/ticket" Component={<Ticket />} />
+    //     <Route path="/tai-khoan" element={<Layout />} />
+    //     <Route
+    //       path="/he-thong-rap"
+    //       element={
+    //         <Header
+    //           left={<MenuHeader />}
+    //           right={<AreaSelect area={"Hà Nội"} />}
+    //         />
+    //       }
+    //     />
+    //     <Route
+    //       path="/cua-hang"
+    //       element={
+    //         <Header
+    //           left={<MenuHeader />}
+    //           right={<AreaSelect area={"Hà Nội"} />}
+    //         />
+    //       }
+    //     />
+    //     <Route
+    //       path="/khuyen-mai-su-kien"
+    //       element={
+    //         <Header
+    //           left={<MenuHeader />}
+    //           right={<AreaSelect area={"Hà Nội"} />}
+    //         />
+    //       }
+    //     />
+    //   </Routes>
+    // </BrowserRouter>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tai-khoan" element={<Layout />} />
-        <Route
-          path="/he-thong-rap"
-          element={
-            <Header
-              left={<MenuHeader />}
-              right={<AreaSelect area={"Hà Nội"} />}
-            />
-          }
-        />
-        <Route
-          path="/cua-hang"
-          element={
-            <Header
-              left={<MenuHeader />}
-              right={<AreaSelect area={"Hà Nội"} />}
-            />
-          }
-        />
-        <Route
-          path="/khuyen-mai-su-kien"
-          element={
-            <Header
-              left={<MenuHeader />}
-              right={<AreaSelect area={"Hà Nội"} />}
-            />
-          }
-        />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

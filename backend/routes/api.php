@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ShowController;
+use App\Http\Controllers\TheaterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +27,14 @@ Route::post('/login', [AuthController::class, 'login']);
 // Route::middleware('auth:sanctum')->group()
 Route::post('/createMovie', [MovieController::class, 'create']);
 Route::get('/getMovie', [MovieController::class, 'index']);
+Route::get('/getMovie/{id}', [MovieController::class, 'get']);
 Route::put('/updateMovie/{id}', [MovieController::class, 'update']);
 Route::delete('/deleteMovie/{id}', [MovieController::class, 'delete']);
+
+// Theater
+Route::post('/createTheater', [TheaterController::class, 'create']);
+
+// Show
+Route::post('/createShow', [ShowController::class, 'create']);
+Route::delete('/deleteShow/{id}', [ShowController::class, 'delete']);
+

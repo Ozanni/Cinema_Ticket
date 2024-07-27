@@ -14,6 +14,16 @@ class MovieController extends Controller
         return response()->json($movies, 200);
     }
 
+    public function get($id) {
+        $movies = DB::table('movies')->where('movie_id', '=',$id)->first();
+        if ($movies) {
+            return response()->json($movies, 200);
+        } else {
+            return response()->json(['false' => 'Movie not found'], 404);
+        }
+
+    }
+
     public function create(Request $request) {
         // Xác thực dữ liệu
         $validator = Validator::make($request->all(), [

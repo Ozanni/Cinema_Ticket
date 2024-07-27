@@ -1,11 +1,26 @@
-// import { Test } from "../components/test";
+import { useRoutes } from "react-router-dom";
+import { Ticket } from "./Ticket";
+import { Home } from "../components/Home/Home";
+import { Layout } from "../components/Auth/Layout";
 
-// export const AppRoute = () => {
-//   const publicRoute = [
-//     { path: "/", component: <Test /> },
-//     { path: "/about", component: () => import("../views/About.vue") },
-//     { path: "/contact", component: () => import("../views/Contact.vue") },
-//   ];
-//   const routes = useRoutes(publicRoute);
-//   return routes;
-// };
+export const AppRoutes = () => {
+  const ticketRoute = [
+    {
+      path: "/ticket/:movieId/*",
+      element: <Ticket />,
+    },
+  ];
+
+  const publicRoutes = [
+    {
+      path: "/*",
+      element: <Home />,
+    },
+    {
+      path: "/tai-khoan",
+      element: <Layout />,
+    },
+  ];
+  const element = useRoutes([...publicRoutes, ...ticketRoute]);
+  return <>{element}</>;
+};

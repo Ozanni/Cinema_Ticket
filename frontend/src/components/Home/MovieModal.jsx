@@ -36,10 +36,26 @@ const MovieModal = ({ movie, id }) => {
             <div>
               <h3 style={{ color: "#72BE43" }}> {movie.movie_name} </h3>
               <p style={{ margin: "25px 0" }}> {movie.description} </p>
-              <Typography text={"Phân loại"} value={movie.classification} />
-              <Typography text={"Đạo diễn"} value={movie.director} />
-              <Typography text={"Thể loại"} value={movie.category} />
-              <Typography text={"Khởi chiếu"} value={movie.premiere} />
+              <Typography
+                text={"Phân loại"}
+                value={movie.classification}
+                marginBottom={"20px"}
+              />
+              <Typography
+                text={"Đạo diễn"}
+                value={movie.director}
+                marginBottom={"20px"}
+              />
+              <Typography
+                text={"Thể loại"}
+                value={movie.category}
+                marginBottom={"20px"}
+              />
+              <Typography
+                text={"Khởi chiếu"}
+                value={movie.premiere}
+                marginBottom={"20px"}
+              />
               <Typography
                 text={"Thời lượng"}
                 value={`${movie.duration} phút`}
