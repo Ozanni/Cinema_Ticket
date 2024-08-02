@@ -9,6 +9,8 @@ class Seat extends Model
 {
     protected $table = 'seats';
     protected $primaryKey = 'seat_id';
+
+    public $timestamps = false;
     protected $fillable = [
         'seat_name',
         'show_id',

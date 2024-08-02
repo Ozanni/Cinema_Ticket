@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import { Step1 } from "../components/Ticket/Step1";
 import LayoutTicket from "../components/Ticket/LayoutTicket";
+import { Step2 } from "../components/Ticket/Step2";
 
 export const Ticket = () => {
   const element = useRoutes(stepRoute);
@@ -18,7 +19,7 @@ const stepRoute = [
       },
       {
         path: "step2",
-        element: <>Step2</>,
+        element: <Step2 />,
       },
       {
         path: "step3",

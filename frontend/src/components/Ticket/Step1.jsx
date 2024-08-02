@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Typography } from "../Others/Typography";
 import styled from "styled-components";
@@ -7,6 +7,8 @@ import { useGetMovie } from "../../api/movie";
 import { useGetShows } from "../../api/show";
 import { useGroupShowsByTheater } from "../../hooks/useGroupShowsByTheater";
 import { useGetTheaters } from "../../api/theater";
+import { useDispatch } from "react-redux";
+import { updateShowID } from "../../rtk/showSlice";
 
 export const Step1 = () => {
   const param = useParams();
@@ -16,10 +18,17 @@ export const Step1 = () => {
   const [date, setDate] = useState(new Date());
   const { shows } = useGetShows(movieId, date);
   const { theaters } = useGetTheaters();
-  console.log("theaters", theaters);
 
   const list = useGroupShowsByTheater(shows, theaters);
-  console.log("list", list);
+  // console.log("list", list);
+
+  const dispatch = useDispatch();
+  const handleClickTime = (showID) => {
+    return () => {
+      dispatch(updateShowID(showID));
+      navigate(`/ticket/${movieId}/step2`);
+    };
+  };
 
   return (
     <>
@@ -68,7 +77,10 @@ export const Step1 = () => {
           <StyledBorder>
             {list && list.length !== 0 ? (
               list?.map((show) => (
-                <StyledBorder style={{ marginBottom: "10px" }}>
+                <StyledBorder
+                  key={show.theaters_id}
+                  style={{ marginBottom: "10px" }}
+                >
                   <h6 style={{ color: "white" }}>
                     {" "}
                     {show.theater.theater_name}{" "}
@@ -76,10 +88,11 @@ export const Step1 = () => {
                   <h6 style={{ color: "white" }}> {show.theater.location} </h6>
                   {show.listShowID.map((item) => (
                     <button
-                      onClick={() => navigate(`/ticket/${movieId}/step2`)}
+                      key={item.showID}
+                      onClick={handleClickTime(item.showID)}
                     >
                       {" "}
-                      {item}{" "}
+                      {item.time}{" "}
                     </button>
                   ))}
                 </StyledBorder>
@@ -103,7 +116,7 @@ const StyledContainer = styled.div`
   gap: 30px;
 `;
 
-const StyledBorder = styled.div`
+export const StyledBorder = styled.div`
   border: 1px solid #454d6a;
   border-radius: 15px;
   padding: 20px;

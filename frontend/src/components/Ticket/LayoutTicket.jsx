@@ -9,7 +9,7 @@ export default function LayoutTicket() {
   const step = path[path.length - 1].slice(4);
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#1a1d29" }}>
       <Header left={<StepHeader currentStep={step} />} />
       <Outlet />
     </div>

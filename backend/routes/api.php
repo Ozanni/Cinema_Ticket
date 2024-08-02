@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SeatController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\TheaterController;
 use Illuminate\Http\Request;
@@ -43,3 +44,6 @@ Route::get('/getShows/{movieID}', [ShowController::class, 'getMovieID']);
 Route::get('/show/getByDay', [ShowController::class, 'getByDay']);
 Route::delete('/deleteShow/{id}', [ShowController::class, 'delete']);
 
+//Seat
+Route::get('/seats/{showID}', [SeatController::class, 'getSeatByShowId']);
+Route::post('/seats/update', [SeatController::class, 'updateStatus']);
