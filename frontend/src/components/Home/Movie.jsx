@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Button } from "../Others/Button";
-import useModal from "../../hooks/useModal";
 import MovieModal from "./MovieModal";
 import { useNavigate } from "react-router-dom";
 

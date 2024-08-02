@@ -36,4 +36,14 @@ class TheaterController extends Controller
             ], 500);
         };
     }
+
+    public function getById($id) {
+        $theater = DB::table('theaters')->where('theater_id', $id)->first();
+        return response()->json($theater, 200);
+    }
+
+    public function getAll() {
+        $theater = DB::table('theaters')->get();
+        return response()->json($theater, 200);
+    }
 }

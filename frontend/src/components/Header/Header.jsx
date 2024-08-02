@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import logo from "../../assets/logoBHD.png";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Header = ({ left, right }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,10 @@ export const Header = ({ left, right }) => {
             style={{
               width: isScrolled ? "40px" : "60px",
               height: isScrolled ? "40px" : "60px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              navigate("/");
             }}
           />
         </div>

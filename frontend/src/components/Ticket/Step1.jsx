@@ -1,67 +1,94 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Header } from "../Header/Header";
+import { useNavigate, useParams } from "react-router-dom";
 import { Typography } from "../Others/Typography";
 import styled from "styled-components";
 import { MyDatePicker } from "../Others/DatePicker";
+import { useGetMovie } from "../../api/movie";
+import { useGetShows } from "../../api/show";
+import { useGroupShowsByTheater } from "../../hooks/useGroupShowsByTheater";
+import { useGetTheaters } from "../../api/theater";
 
 export const Step1 = () => {
   const param = useParams();
   const movieId = param.movieId;
-  const [movie, setMovie] = useState(null);
+  const navigate = useNavigate();
+  const { movieData: movie } = useGetMovie(movieId);
+  const [date, setDate] = useState(new Date());
+  const { shows } = useGetShows(movieId, date);
+  const { theaters } = useGetTheaters();
+  console.log("theaters", theaters);
 
-  useEffect(() => {
-    const getMovie = async () => {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/getMovie/${movieId}`
-        );
-        setMovie(response.data);
-      } catch (err) {
-        console.log("lỗi lấy phim", err);
-      }
-    };
-    getMovie();
-  }, []);
+  const list = useGroupShowsByTheater(shows, theaters);
+  console.log("list", list);
 
   return (
     <>
-      <Header />
-      {/* <MyDatePicker style={{ color: "#ffffff" }} /> */}
-
       <StyledContainer>
-        <h2 style={{ margin: "30px 0" }}>Bước 1: Chọn thời gian và địa điểm</h2>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <h2 style={{ margin: "30px 0" }}>
+            Bước 1: Chọn thời gian và địa điểm
+          </h2>
+        </div>
         {movie && (
-          <StyledBorder style={{ display: "flex" }}>
-            <div style={{ width: "30%", marginRight: "20px" }}>
-              <img
-                src={movie.image}
-                style={{
-                  width: "100%",
-                  borderRadius: "12px",
-                }}
-              />
-            </div>
-            <div>
-              <h3 style={{ color: "#72BE43" }}> {movie.movie_name} </h3>
-              <p style={{ margin: "15px 0" }}> {movie.description} </p>
-              <Typography text={"Đạo diễn"} value={movie.director} />
-              <Typography text={"Thể loại"} value={movie.category} />
-              <Typography text={"Khởi chiếu"} value={movie.premiere} />
-              <Typography
-                text={"Thời lượng"}
-                value={`${movie.duration} phút`}
-              />
-            </div>
+          <StyledBorder>
+            <StyledGrid template={"15% auto"}>
+              <div>
+                <img
+                  src={movie.image}
+                  style={{
+                    width: "100%",
+                    borderRadius: "12px",
+                  }}
+                />
+              </div>
+              <div>
+                <h3 style={{ color: "#72BE43" }}> {movie.movie_name} </h3>
+                <p style={{ margin: "15px 0" }}> {movie.description} </p>
+                <Typography text={"Đạo diễn"} value={movie.director} />
+                <Typography text={"Thể loại"} value={movie.category} />
+                <Typography text={"Khởi chiếu"} value={movie.premiere} />
+                <Typography
+                  text={"Thời lượng"}
+                  value={`${movie.duration} phút`}
+                />
+              </div>
+            </StyledGrid>
           </StyledBorder>
         )}
-        <div style={{ display: "flex" }}>
+        <StyledGrid template={"290px auto"}>
           <StyledBorder>
-            <MyDatePicker />
+            <MyDatePicker date={date} onChange={(date) => setDate(date)} />
           </StyledBorder>
-          <StyledBorder></StyledBorder>
-        </div>
+          <StyledBorder>
+            {list && list.length !== 0 ? (
+              list?.map((show) => (
+                <StyledBorder style={{ marginBottom: "10px" }}>
+                  <h6 style={{ color: "white" }}>
+                    {" "}
+                    {show.theater.theater_name}{" "}
+                  </h6>
+                  <h6 style={{ color: "white" }}> {show.theater.location} </h6>
+                  {show.listShowID.map((item) => (
+                    <button
+                      onClick={() => navigate(`/ticket/${movieId}/step2`)}
+                    >
+                      {" "}
+                      {item}{" "}
+                    </button>
+                  ))}
+                </StyledBorder>
+              ))
+            ) : (
+              <div>Không có suất chiếu nào</div>
+            )}
+          </StyledBorder>
+        </StyledGrid>
       </StyledContainer>
     </>
   );
@@ -70,14 +97,21 @@ export const Step1 = () => {
 const StyledContainer = styled.div`
   background-color: #1a1d29;
   color: #ffffff;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
   padding: 10px 20px;
+  justify-self: center;
+  gap: 30px;
 `;
 
 const StyledBorder = styled.div`
   border: 1px solid #454d6a;
   border-radius: 15px;
   padding: 20px;
+`;
+
+const StyledGrid = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: ${(props) => props.template ?? "30% 68%"};
+  gap: 2%;
 `;

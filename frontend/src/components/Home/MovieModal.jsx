@@ -69,7 +69,7 @@ const MovieModal = ({ movie, id }) => {
 };
 
 MovieModal.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 const StyledBody = styled.div`

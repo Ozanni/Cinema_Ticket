@@ -33,8 +33,13 @@ Route::delete('/deleteMovie/{id}', [MovieController::class, 'delete']);
 
 // Theater
 Route::post('/createTheater', [TheaterController::class, 'create']);
+Route::get('/theater/get/{id}', [TheaterController::class, 'getById']);
+Route::get('/theater/getAll', [TheaterController::class, 'getAll']);
 
 // Show
 Route::post('/createShow', [ShowController::class, 'create']);
+Route::get('/getAllShow', [ShowController::class, 'getAll']);
+Route::get('/getShows/{movieID}', [ShowController::class, 'getMovieID']);
+Route::get('/show/getByDay', [ShowController::class, 'getByDay']);
 Route::delete('/deleteShow/{id}', [ShowController::class, 'delete']);
 

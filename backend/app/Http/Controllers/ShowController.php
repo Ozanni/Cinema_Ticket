@@ -39,6 +39,27 @@ class ShowController extends Controller
         };
     }
 
+    public function getAll() {
+        $allShows = Show::all();
+        return response()->json($allShows, 200);
+    }
+
+    public function getMovieID($movieID) {
+        $shows = Show::where('movie_id', $movieID)->get();
+        if ($shows->isEmpty()) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+        return response()->json($shows, 200);
+    }
+
+    public function getByDay(Request $request) {
+        $shows = Show::where('movie_id', $request->movieID)->where('day', $request->day)->get();
+        // if ($shows->isEmpty()) {
+        //     return response()->json(['message' => 'Not found'], 404);
+        // }
+        return response()->json($shows, 200);
+    }
+
     public function delete($id) {
         $show = Show::find($id);
 

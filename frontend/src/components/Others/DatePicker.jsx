@@ -2,13 +2,14 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const MyDatePicker = () => {
-  const [startDate, setStartDate] = useState(new Date());
+export const MyDatePicker = ({ date, onChange }) => {
+  // const [startDate, setStartDate] = useState(date);
+
   return (
     <DatePicker
-      selected={startDate}
+      selected={date}
       minDate={new Date()}
-      onChange={(date) => setStartDate(date)}
+      onChange={onChange}
       inline
     />
   );

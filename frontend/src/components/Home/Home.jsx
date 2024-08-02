@@ -32,7 +32,7 @@ export const Home = () => {
         <div style={{ display: "flex" }}>
           {movies &&
             movies.map((movie) => {
-              return <Movie movie={movie} />;
+              return <Movie key={movie.movie_id} movie={movie} />;
             })}
         </div>
       </div>
