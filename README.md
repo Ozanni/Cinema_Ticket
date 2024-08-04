@@ -24,7 +24,7 @@ git clone https://github.com/Ozanni/clone_BHD_web.git
 2. cd frontend
    ```
    npm install
-```
-```
-npm run dev
-```
+   ```
+   ```
+   npm run dev
+   ```
