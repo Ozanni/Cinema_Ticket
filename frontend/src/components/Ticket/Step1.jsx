@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Typography } from "../Others/Typography";
 import styled from "styled-components";
 import { MyDatePicker } from "../Others/DatePicker";
-import { useGetMovie } from "../../api/movie";
-import { useGetShows } from "../../api/show";
+import { useGetMovieQuery } from "../../api/movie";
+import { useGetShowByDayQuery } from "../../api/show";
 import { useGroupShowsByTheater } from "../../hooks/useGroupShowsByTheater";
 import { useGetTheaters } from "../../api/theater";
 import { useDispatch } from "react-redux";
@@ -15,9 +15,9 @@ export const Step1 = () => {
   const param = useParams();
   const movieId = param.movieId;
   const navigate = useNavigate();
-  const { movieData: movie } = useGetMovie(movieId);
+  const { data: movie } = useGetMovieQuery(movieId);
   const [date, setDate] = useState(new Date());
-  const { shows } = useGetShows(movieId, date);
+  const { data: shows } = useGetShowByDayQuery(movieId, date);
   const { theaters } = useGetTheaters();
 
   const list = useGroupShowsByTheater(shows, theaters);

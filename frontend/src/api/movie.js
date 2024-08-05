@@ -1,22 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { api } from "../rtk/api";
 
-export const useGetMovie = (movieID) => {
-  const [movieData, setMovieData] = useState(null);
+const movieApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    getMovie: build.query({
+      query: (id) => ({
+        url: `/getMovie/${id}`,
+        method: "GET",
+      }),
+    }),
+    getAllMovie: build.query({
+      query: () => ({
+        url: "/getMovie",
+        method: "GET",
+      }),
+    }),
+  }),
+});
 
-  useEffect(() => {
-    const getMovie = async () => {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/getMovie/${movieID}`
-        );
-        setMovieData(response.data);
-      } catch (err) {
-        console.log("lỗi api", err);
-      }
-    };
-    getMovie();
-  }, [movieID]);
-
-  return { movieData };
-};
+export const { useGetMovieQuery, useGetAllMovieQuery } = movieApi;

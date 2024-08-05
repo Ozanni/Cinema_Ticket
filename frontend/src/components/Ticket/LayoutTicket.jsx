@@ -2,11 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Header } from "../Header/Header";
 import { Outlet, useLocation } from "react-router-dom";
+import { useGetMovieQuery } from "../../api/movie";
 
 export default function LayoutTicket() {
   const location = useLocation();
   const path = location.pathname.split("/");
   const step = path[path.length - 1].slice(4);
+  const { data: movie } = useGetMovieQuery(1);
+  console.log("data", movie);
 
   return (
     <div style={{ backgroundColor: "#1a1d29" }}>

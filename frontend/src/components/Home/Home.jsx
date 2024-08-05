@@ -1,25 +1,12 @@
-import { useEffect, useState } from "react";
 import { Movie } from "./Movie";
-import axios from "axios";
 import { MenuHeader } from "../Header/MenuHeader";
 import { AreaSelect } from "../AreaSelect";
 import { Header } from "../Header/Header";
 import styled from "styled-components";
+import { useGetAllMovieQuery } from "../../api/movie";
 
 export const Home = () => {
-  const [movies, setMovies] = useState(null);
-
-  useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/getMovie");
-        setMovies(response.data);
-      } catch (err) {
-        console.log("lỗi lấy danh sách phim", err);
-      }
-    };
-    getMovies();
-  }, []);
+  const { data: movies } = useGetAllMovieQuery();
 
   return (
     <StyledHome>
