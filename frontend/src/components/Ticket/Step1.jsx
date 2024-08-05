@@ -9,6 +9,7 @@ import { useGroupShowsByTheater } from "../../hooks/useGroupShowsByTheater";
 import { useGetTheaters } from "../../api/theater";
 import { useDispatch } from "react-redux";
 import { updateShowID } from "../../rtk/showSlice";
+import { Button } from "../Others/Button";
 
 export const Step1 = () => {
   const param = useParams();
@@ -20,7 +21,6 @@ export const Step1 = () => {
   const { theaters } = useGetTheaters();
 
   const list = useGroupShowsByTheater(shows, theaters);
-  // console.log("list", list);
 
   const dispatch = useDispatch();
   const handleClickTime = (showID) => {
@@ -87,13 +87,13 @@ export const Step1 = () => {
                   </h6>
                   <h6 style={{ color: "white" }}> {show.theater.location} </h6>
                   {show.listShowID.map((item) => (
-                    <button
+                    <Button
                       key={item.showID}
+                      text={item.time.slice(0, 5)}
+                      bg={"#454d6a"}
+                      padding={"10px 20px"}
                       onClick={handleClickTime(item.showID)}
-                    >
-                      {" "}
-                      {item.time}{" "}
-                    </button>
+                    />
                   ))}
                 </StyledBorder>
               ))

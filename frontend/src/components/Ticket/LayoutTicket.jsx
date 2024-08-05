@@ -34,7 +34,14 @@ const StepContainer = styled.div`
 `;
 
 const Step = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${(props) =>
     props.complete === "true" ? "green" : "none"};
   color: #ffffff;
+  border: #ffffffcc 3px solid;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
 `;

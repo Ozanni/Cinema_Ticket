@@ -2,9 +2,21 @@ import React from "react";
 import ticket from "../../assets/ticket.svg";
 import styled from "styled-components";
 
-export const Button = ({ text, isTicket, oneColor, ...buttonProps }) => {
+export const Button = ({
+  text,
+  isTicket,
+  oneColor,
+  bg,
+  padding,
+  ...buttonProps
+}) => {
   return (
-    <StyledButton oneColor={oneColor} {...buttonProps}>
+    <StyledButton
+      oneColor={oneColor}
+      bg={bg}
+      padding={padding}
+      {...buttonProps}
+    >
       {isTicket && (
         <img
           src={ticket}
@@ -25,9 +37,9 @@ const StyledButton = styled.button`
   background: ${(props) =>
     props.oneColor
       ? "#72be43"
-      : "linear-gradient(to bottom, #72be43, #dde455)"};
+      : props.bg ?? "linear-gradient(to bottom, #72be43, #dde455)"};
   color: white;
-  padding: 5px 10px;
+  padding: ${(props) => props.padding ?? "5px 10px"};
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -36,5 +48,7 @@ const StyledButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   border: none;
-  // width: 100%;
+  &:hover {
+    background-color: ${(props) => (props.bg ? "#72be43" : "none")};
+  }
 `;
