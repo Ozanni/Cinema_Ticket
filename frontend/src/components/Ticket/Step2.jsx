@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { Seat } from "../Others/Seat";
 import styled from "styled-components";
-import { useGetSeats } from "../../api/seat";
+import { useGetSeatsQuery } from "../../api/seat";
 import { StyledBorder } from "./Step1";
 
 export const Step2 = () => {
   const showID = useSelector((state) => state.show.value);
-  const { seats } = useGetSeats(showID);
+  const { data: seats } = useGetSeatsQuery(showID);
   const seatOrder = useSelector((state) => state.seat.value);
 
   return (

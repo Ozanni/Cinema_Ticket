@@ -1,22 +1,14 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { api } from "../rtk/api";
 
-export const useGetTheaters = () => {
-  const [theaters, setTheaters] = useState(null);
+const theaterApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    getTheaters: build.query({
+      query: () => ({
+        url: "/theater/getAll",
+        method: "GET",
+      }),
+    }),
+  }),
+});
 
-  useEffect(() => {
-    const getTheaters = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/theater/getAll"
-        );
-        setTheaters(response.data);
-      } catch (err) {
-        console.log("lỗi api", err);
-      }
-    };
-    getTheaters();
-  }, []);
-
-  return { theaters };
-};
+export const { useGetTheatersQuery } = theaterApi;

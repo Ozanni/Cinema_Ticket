@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { api } from "../rtk/api";
 
 export const useGetSeats = (showID) => {
   const [seats, setSeats] = useState(null);
@@ -19,3 +20,16 @@ export const useGetSeats = (showID) => {
   }, [showID]);
   return { seats };
 };
+
+const seatApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    getSeats: build.query({
+      query: (showID) => ({
+        url: `/seats/${showID}`,
+        method: "GET",
+      }),
+    }),
+  }),
+});
+
+export const { useGetSeatsQuery } = seatApi;

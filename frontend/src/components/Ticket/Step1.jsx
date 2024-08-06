@@ -6,23 +6,35 @@ import { MyDatePicker } from "../Others/DatePicker";
 import { useGetMovieQuery } from "../../api/movie";
 import { useGetShowByDayQuery } from "../../api/show";
 import { useGroupShowsByTheater } from "../../hooks/useGroupShowsByTheater";
-import { useGetTheaters } from "../../api/theater";
+import { useGetTheatersQuery } from "../../api/theater";
 import { useDispatch } from "react-redux";
 import { updateShowID } from "../../rtk/showSlice";
 import { Button } from "../Others/Button";
+
+// xử lý định dạng date từ mặc định thành YYYY-MM-DD
+const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 export const Step1 = () => {
   const param = useParams();
   const movieId = param.movieId;
   const navigate = useNavigate();
   const { data: movie } = useGetMovieQuery(movieId);
-  const [date, setDate] = useState(new Date());
-  const { data: shows } = useGetShowByDayQuery(movieId, date);
-  const { theaters } = useGetTheaters();
+  const [date, setDate] = useState(formatDate(new Date()));
+  const { data: shows } = useGetShowByDayQuery({
+    movieID: movieId,
+    date: date,
+  });
+  const { data: theaters } = useGetTheatersQuery();
 
   const list = useGroupShowsByTheater(shows, theaters);
 
   const dispatch = useDispatch();
+
   const handleClickTime = (showID) => {
     return () => {
       dispatch(updateShowID(showID));
@@ -72,7 +84,10 @@ export const Step1 = () => {
         )}
         <StyledGrid template={"290px auto"}>
           <StyledBorder>
-            <MyDatePicker date={date} onChange={(date) => setDate(date)} />
+            <MyDatePicker
+              date={date}
+              onChange={(date) => setDate(formatDate(date))}
+            />
           </StyledBorder>
           <StyledBorder>
             {list && list.length !== 0 ? (
