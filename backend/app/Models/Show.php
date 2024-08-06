@@ -10,7 +10,7 @@ class Show extends Model
 {
     protected $primaryKey = 'show_id';
 
-    protected $fillable = ['movie_id', 'theaters_id', 'time', 'day'];
+    protected $fillable = ['movie_id', 'theaters_id', 'time', 'day', 'price'];
 
     public $timestamps = false;
 
@@ -28,11 +28,19 @@ class Show extends Model
                     $seats[] = [
                         'seat_name' => "{$row}{$number}",
                         'show_id' => $show->show_id,
+                        'price' =>$show->price,
                     ];
                 }
             }
 
             DB::table('seats')->insert($seats);
+        });
+
+        static::updating(function ($show) {
+            if($show->isDirty('price')) {
+                DB::table('seats')->where('show_id', $show->show_id)
+                                    ->update(['price'=> $show->price]);
+            }
         });
 
         static::deleting(function ($show) {

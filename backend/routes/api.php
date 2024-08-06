@@ -26,8 +26,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 // Route::middleware('auth:sanctum')->group()
+
+//Movie
 Route::post('/createMovie', [MovieController::class, 'create']);
-Route::get('/getMovie', [MovieController::class, 'index']);
+Route::get('/getMovie', [MovieController::class, 'getAll']);
 Route::get('/getMovie/{id}', [MovieController::class, 'get']);
 Route::put('/updateMovie/{id}', [MovieController::class, 'update']);
 Route::delete('/deleteMovie/{id}', [MovieController::class, 'delete']);
@@ -40,8 +42,9 @@ Route::get('/theater/getAll', [TheaterController::class, 'getAll']);
 // Show
 Route::post('/createShow', [ShowController::class, 'create']);
 Route::get('/getAllShow', [ShowController::class, 'getAll']);
-Route::get('/getShows/{movieID}', [ShowController::class, 'getMovieID']);
-Route::get('/show/getByDay', [ShowController::class, 'getByDay']);
+Route::get('/getShows/{movieID}', [ShowController::class, 'getShowByMovieID']);
+Route::get('/show/getByDay', [ShowController::class, 'getShowByDay']);
+Route::put('/show/update/{id}', [ShowController::class, 'update']);
 Route::delete('/deleteShow/{id}', [ShowController::class, 'delete']);
 
 //Seat

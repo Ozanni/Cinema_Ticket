@@ -15,6 +15,7 @@ class Seat extends Model
         'seat_name',
         'show_id',
         'status',
+        'price'
     ];
 
     public function show() {

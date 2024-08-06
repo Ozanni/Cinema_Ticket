@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Validator;
 
 class MovieController extends Controller
 {
-    public function index() {
+    public function getAll() {
         $movies = DB::table('movies')->get();
         return response()->json($movies, 200);
     }
 
     public function get($id) {
-        $movies = DB::table('movies')->where('movie_id', '=',$id)->first();
+        $movies = DB::table('movies')->where('movie_id', '=', $id)->first();
         if ($movies) {
             return response()->json($movies, 200);
         } else {
@@ -27,14 +27,14 @@ class MovieController extends Controller
     public function create(Request $request) {
         // Xác thực dữ liệu
         $validator = Validator::make($request->all(), [
-            'movieName' => 'required|string|max:255',
+            'movie_name' => 'required|string|max:255',
             'description' => 'required|string',
             'director' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'classification' => 'required|string|max:255',
             'duration' => 'required|integer',
             'image' => 'required|string',
-            'linkTrailer' => 'required|string|max:255',
+            'link_trailer' => 'required|string|max:255',
             'premiere' => 'required|date'
         ]);
 
@@ -46,18 +46,7 @@ class MovieController extends Controller
         }
 
         try {
-            // Chèn dữ liệu vào cơ sở dữ liệu
-            DB::table('movies')->insert([
-                'movie_name' => $request->movieName,
-                'description' => $request->description,
-                'director' => $request->director,
-                'category' => $request->category,
-                'classification' => $request->classification,
-                'duration' => $request->duration,
-                'image' => $request->image,
-                'link_trailer' => $request->linkTrailer,
-                'premiere' => $request->premiere
-            ]);
+            DB::table('movies')->insert($request->all());
 
             return response()->json([
                 'success' => 'Create movie success'
@@ -71,14 +60,33 @@ class MovieController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $movie = Movie::findOrFail($id);
-        $movie->update($request->all());
-        return response()->json(['success' => 'Update movie success'], 201);
+        $movie = Movie::where('movie_id', $id);
+        try {
+            $movie->update($request->all());
+            return response()->json([
+                'success' => 'Update movie success',
+                'movie' => $movie,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Could not update movie',
+                'messages' => $e->getMessage()
+            ], 500);
+        };
     }
 
     public function delete($id) {
         $movie = Movie::findOrFail($id);
-        $movie->delete();
-        return response()->json(['success' => 'Delete movie success'], 201);
+        try {
+            $movie->delete();
+            return response()->json([
+                'success' => 'Delete movie success',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Could not delete movie',
+                'messages' => $e->getMessage()
+            ], 500);
+        };
     }
 }
