@@ -14,7 +14,15 @@ const showApi = api.injectEndpoints({
         };
       },
     }),
+    getShowByID: build.query({
+      query: (id) => {
+        return {
+          url: `/show/${id}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetShowByDayQuery } = showApi;
+export const { useGetShowByDayQuery, useGetShowByIDQuery } = showApi;

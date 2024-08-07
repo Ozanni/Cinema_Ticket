@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: [],
+  name: [],
+  totalPrice: 0,
 };
 
 export const seatSlice = createSlice({
@@ -9,11 +10,20 @@ export const seatSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      state.value.push(action.payload);
+      state.name.push(action.payload.seat_name);
+      state.totalPrice += action.payload.price;
+    },
+    remove: (state, action) => {
+      // state.name.splice(state.name.indexOf(action.payload.seat_name), 1);
+      const arrayName = state.name.filter(
+        (name) => name != action.payload.seat_name
+      );
+      state.name = arrayName;
+      state.totalPrice -= action.payload.price;
     },
   },
 });
 
-export const { add } = seatSlice.actions;
+export const { add, remove } = seatSlice.actions;
 
 export default seatSlice.reducer;
