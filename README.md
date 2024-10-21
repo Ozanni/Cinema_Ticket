@@ -1,4 +1,4 @@
-# BHD Website Clone
+# Cinema Ticket Website
 
 This project is a clone of the BHD website, created for learning and personal development purposes.
 
